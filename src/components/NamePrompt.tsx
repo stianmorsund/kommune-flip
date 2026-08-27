@@ -24,7 +24,7 @@ export const NamePrompt = ({ onTypedName, time }: NamePromptProps) => {
           Ditt navn
         </label>
         <input
-          className="text-xl border-2 border-black rounded-md p-4 w-100 outline-none focus-visible:ring-4 ring-offset-4 ring-offset-focus"
+          className="text-xl border-2 border-black rounded-md p-4 outline-hidden focus-visible:ring-4 focus-visible:ring-offset-4 focus-visible:ring-offset-focus"
           placeholder="Flippus Maximus"
           autoComplete="off"
           name="name"
