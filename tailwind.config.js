@@ -15,6 +15,9 @@ export default {
       aspectRatio: {
         golden: "1.586 / 1",
       },
+      borderRadius: {
+        ray: "80% 80% 0 0",
+      },
       boxShadow: {
         card: "0 1px 5px #00000099",
         "card-hover": "0 5px 20px 5px #00000044",
@@ -29,6 +32,23 @@ export default {
         wiggle: {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
+        },
+        ray: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        cloud: {
+          "0%": {
+            transform: "translate(-22%, 10vh)",
+            opacity: "0.8",
+          },
+          "50%": {
+            opacity: "0.8",
+          },
+          "100%": {
+            transform: "translate(122%, 10vh)",
+            opacity: "0.4",
+          },
         },
         beam: {
           "0%, 100%": {
@@ -71,9 +91,17 @@ export default {
           "0%, 100%": { transform: "translateX(-7px)" },
           "50%": { transform: "translateX(7px)" },
         },
+        sheep: {
+          "0%": { transform: "translateX(-22%)" },
+          "50%": { transform: "translateX(70%)" },
+          "100%": { transform: "translateX(-22%)" },
+        },
       },
       animation: {
         wiggle: "wiggle 1.2s ease-in-out infinite",
+        ray: "ray 60s linear infinite",
+        cloud: "cloud 60s linear infinite",
+        sheep: "sheep 30s ease-in-out infinite",
         beam: "beam 16s ease-in-out infinite",
         surface: "surface 8s ease-in-out infinite",
         swim: "swim 40s linear infinite",
