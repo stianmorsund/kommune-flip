@@ -71,7 +71,7 @@ const Card = ({
       aria-atomic={false}
       ref={cardRef}
       className={classNames(
-        "relative cursor-pointer select-none duration-[150ms] shadow-card hover:shadow-card-hover transition-transform-shadow rounded-xl overflow-hidden focus-visible:ring-8 ring-focus ring-offset-2 w-full h-full",
+        "relative cursor-pointer select-none duration-150 shadow-card hover:shadow-card-hover transition-transform-shadow rounded-xl overflow-hidden focus-visible:ring-8 focus-visible:ring-focus focus-visible:ring-offset-2 w-full h-full",
         {
           "pointer-events-none": isFlipped,
         }
@@ -81,7 +81,7 @@ const Card = ({
       <div
         style={{ transformStyle: "preserve-3d" }}
         className={classNames(
-          `break-words absolute inset-0 transition-transform duration-${cardFlipDuration}`,
+          `wrap-break-word absolute inset-0 transition-transform duration-${cardFlipDuration}`,
           {
             "transform rotate-y-180": isFlipped,
           }
@@ -97,7 +97,7 @@ const Card = ({
           <img
             src={kommune.image}
             alt=""
-            className="w-50 h-auto p-2 mx-auto my-0 backface-hidden"
+            className="h-auto p-2 mx-auto my-0 backface-hidden"
           />
           <h2
             className="sm:text-2xl font-semibold text-center p-2"
