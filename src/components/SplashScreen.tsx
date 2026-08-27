@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Bubbles } from "./Bubbles";
 import { Button } from "./Button";
 import { Credits } from "./Credits";
 import { Fishes } from "./Fishes";
@@ -15,6 +16,7 @@ const SplashScreen = ({ onStartGame }: SplashScreenProps) => {
       <div className="fixed inset-0 z-0">
         <SunBeams />
         <Fishes />
+        <Bubbles />
       </div>
       <h1 className="text-4xl font-bold mb-8 sr-only">Kommune Flip</h1>
       <img
@@ -25,7 +27,14 @@ const SplashScreen = ({ onStartGame }: SplashScreenProps) => {
       <Button onClick={onStartGame}>Start flippingen!</Button>
       <div className="absolute bottom-5 right-5 z-20 flex w-28 flex-col items-center gap-2 rounded-xl bg-white/60 p-2">
         {showCredits && <Credits />}
-        <img src="ksd.svg" alt="KS Digital logo" />
+        <button
+          type="button"
+          aria-label="Vis credits"
+          className="block w-full"
+          onClick={() => setShowCredits(true)}
+        >
+          <img src="ksd.svg" alt="KS Digital logo" className="w-full" />
+        </button>
       </div>
     </div>
   );
