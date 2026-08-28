@@ -1,4 +1,8 @@
+@layer theme, base, ds, ksd, components, utilities;
+
 @import 'tailwindcss';
+@import '@ks-digital/designsystem-themes/base.css';
+@import '@ks-digital/designsystem-themes/ksdigital.css';
 
 @config '../tailwind.config.js';
 
