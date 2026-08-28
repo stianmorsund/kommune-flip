@@ -43,7 +43,7 @@ const SplashScreen2026 = ({ onStartGame }: SplashScreen2026Props) => {
       />
       <Button onClick={onStartGame}>Start flippingen!</Button>
       <div className="absolute bottom-5 right-5 z-20 flex w-28 flex-col items-center gap-2 rounded-xl bg-white/60 p-2">
-        {showCredits && <Credits />}
+        {showCredits && <Credits onClose={() => setShowCredits(false)} />}
         <button
           type="button"
           aria-label="Vis credits"
