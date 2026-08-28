@@ -97,10 +97,10 @@ const Card = ({
           <img
             src={kommune.image}
             alt=""
-            className="h-auto p-2 mx-auto my-0 backface-hidden"
+            className="min-h-0 max-w-full object-contain p-2 mx-auto my-0 backface-hidden"
           />
           <h2
-            className="sm:text-2xl font-semibold text-center p-2"
+            className="sm:text-2xl font-semibold text-center p-2 shrink-0"
             aria-hidden={!isFlipped}
           >
             {kommune.navn}
