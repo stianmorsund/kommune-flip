@@ -14,7 +14,21 @@ type Beam = {
 };
 
 /** Every beam radiates from this point, far above the surface. */
-const origin = { left: "46%", top: "-55vh" };
+const originTop = -55;
+const origin = { left: "46%", top: `${originTop}vh` };
+const beamGradient = (beam: Beam) => {
+  const verticalSpan = beam.length * Math.cos((beam.angle * Math.PI) / 180);
+  const visible = Math.min(1, (100 - originTop) / verticalSpan);
+  const stop = (fraction: number) => `${(fraction * visible * 100).toFixed(1)}%`;
+  return [
+    "linear-gradient(to bottom",
+    "rgba(224,252,255,0) 0%",
+    `rgba(224,252,255,0.8) ${stop(0.22)}`,
+    `rgba(165,233,255,0.45) ${stop(0.5)}`,
+    `rgba(125,211,252,0.12) ${stop(0.78)}`,
+    `rgba(125,211,252,0) ${stop(1)})`,
+  ].join(", ");
+};
 
 const beams: Beam[] = [
   {
@@ -115,8 +129,7 @@ export const SunBeams = () => {
                 transformOrigin: "top center",
                 // Narrow at the origin, so only the already-fanned part is on screen.
                 clipPath: "polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%)",
-                background:
-                  "linear-gradient(to bottom, rgba(224,252,255,0) 0%, rgba(224,252,255,0.8) 25%, rgba(165,233,255,0.45) 55%, rgba(125,211,252,0.12) 80%, rgba(125,211,252,0) 100%)",
+                background: beamGradient(beam),
                 animationDuration: beam.duration,
                 animationDelay: beam.delay,
                 "--beam-opacity": beam.opacity,
