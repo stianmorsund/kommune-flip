@@ -1,13 +1,18 @@
+import { Heading, Paragraph } from "@ks-digital/designsystem-react";
 import { Button } from "./Button";
 import Modal from "./Modal";
 
-export const Credits = () => {
+export const Credits = ({ onClose }: { onClose: () => void }) => {
   return (
-    <Modal>
-      <h1 className="text-4xl font-bold mb-4">Credits</h1>
-      <p className="text-xl py-4">For KS Digital, JavaZone 2026.</p>
+    <Modal onClose={onClose}>
+      <div className="flex flex-col gap-4">
+        <Heading level={1} data-size="md">
+          Credits
+        </Heading>
+        <Paragraph>For KS Digital, Javabin 2024.</Paragraph>
+      </div>
       <div className="text-center">
-        <Button onClick={() => window.location.reload()}>Ok</Button>
+        <Button onClick={() => window.location.reload()}>Lukk</Button>
       </div>
     </Modal>
   );
