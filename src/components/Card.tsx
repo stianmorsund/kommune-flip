@@ -110,7 +110,7 @@ const Card = ({
         {/* Front of card */}
         <div
           className={classNames(
-            "absolute inset-0 bg-blue-600 backface-hidden flex items-center justify-center rounded-xl"
+            "absolute inset-0 bg-blue-600 backface-hidden transform rotate-y-0 flex items-center justify-center rounded-xl"
           )}
         >
           <div
