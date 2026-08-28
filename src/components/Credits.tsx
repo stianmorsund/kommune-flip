@@ -9,7 +9,7 @@ export const Credits = ({ onClose }: { onClose: () => void }) => {
         <Heading level={1} data-size="md">
           Credits
         </Heading>
-        <Paragraph>For KS Digital, Javabin 2024.</Paragraph>
+        <Paragraph>For KS Digital, Javazone 2026.</Paragraph>
       </div>
       <div className="text-center">
         <Button onClick={() => window.location.reload()}>Lukk</Button>
