@@ -41,7 +41,7 @@ const SplashScreen = ({ onStartGame }: SplashScreenProps) => {
         >
           Credits
         </button>
-        {showCredits && <Credits />}
+        {showCredits && <Credits onClose={() => setShowCredits(false)} />}
         <img className="opacity-60" src="ksd.svg" alt="KS Digital logo" />
       </div>
     </div>

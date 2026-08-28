@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { createRef, useEffect, useState } from "react";
+import { Heading } from "@ks-digital/designsystem-react";
 import { Kommune } from "../assets/kommuner";
 
 
@@ -97,20 +98,22 @@ const Card = ({
           <img
             src={kommune.image}
             alt=""
-            className="h-auto p-2 mx-auto my-0 backface-hidden"
+            className="min-h-0 max-w-full object-contain p-2 mx-auto my-0 backface-hidden"
           />
-          <h2
-            className="sm:text-2xl font-semibold text-center p-2"
+          <Heading
+            level={2}
+            data-size="xs"
+            className="text-center p-2 shrink-0"
             aria-hidden={!isFlipped}
           >
             {kommune.navn}
-          </h2>
+          </Heading>
         </div>
 
         {/* Front of card */}
         <div
           className={classNames(
-            "absolute inset-0 bg-blue-600 backface-hidden flex items-center justify-center rounded-xl"
+            "absolute inset-0 bg-blue-600 backface-hidden transform rotate-y-0 flex items-center justify-center rounded-xl"
           )}
         >
           <div
