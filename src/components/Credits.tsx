@@ -12,7 +12,7 @@ export const Credits = ({ onClose }: { onClose: () => void }) => {
         <Paragraph>For KS Digital, Javazone 2026.</Paragraph>
       </div>
       <div className="text-center">
-        <Button onClick={() => window.location.reload()}>Lukk</Button>
+        <Button onClick={() => onClose()}>Lukk</Button>
       </div>
     </Modal>
   );
