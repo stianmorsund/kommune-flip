@@ -7,9 +7,9 @@ export const Credits = ({ onClose }: { onClose: () => void }) => {
     <Modal onClose={onClose}>
       <div className="flex flex-col gap-4">
         <Heading level={1} data-size="md">
-          Credits
+          Om
         </Heading>
-        <Paragraph>For KS Digital, Javazone 2026.</Paragraph>
+        <Paragraph>Laget for KS Digital, Javazone 2026.</Paragraph>
       </div>
       <div className="text-center">
         <Button onClick={() => onClose()}>Lukk</Button>

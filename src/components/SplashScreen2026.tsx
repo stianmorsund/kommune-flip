@@ -42,12 +42,12 @@ const SplashScreen2026 = ({ onStartGame }: SplashScreen2026Props) => {
         className="z-20 w-[600px] mx-auto animate-wiggle p-8 pb-0 pt-56"
       />
       <Button onClick={onStartGame}>Start flippingen!</Button>
-      <div className="absolute bottom-5 right-5 z-20 flex w-28 flex-col items-center gap-2 rounded-xl bg-white/60 p-2">
+      <div className="absolute bottom-5 right-5 z-20 flex w-28 flex-col items-center rounded-xl bg-white/60 p-2 transition-colors hover:bg-white">
         {showCredits && <Credits onClose={() => setShowCredits(false)} />}
         <button
           type="button"
-          aria-label="Vis credits"
-          className="block w-full"
+          aria-label="Om spillet"
+          className="block w-full cursor-pointer"
           onClick={() => setShowCredits(true)}
         >
           <img src="ksd2026.svg" alt="KS Digital logo" className="w-full" />
