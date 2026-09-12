@@ -113,13 +113,17 @@ const Card = ({
         {/* Front of card */}
         <div
           className={classNames(
-            "absolute inset-0 bg-blue-600 backface-hidden transform rotate-y-0 flex items-center justify-center rounded-xl"
+            "absolute inset-0 bg-(--ds-color-accent-base-default) backface-hidden transform rotate-y-0 flex items-center justify-center overflow-hidden rounded-xl"
           )}
         >
+          <div className="pointer-events-none absolute inset-1 sm:inset-1.5 rounded-lg overflow-hidden card-pattern"></div>
+
           <div
             ref={glowRef}
             className="absolute w-full h-full left-0 top-0 bg-custom-radial"
           ></div>
+
+          <div className="pointer-events-none absolute inset-1 sm:inset-1.5 rounded-lg border-[6px] border-white/80"></div>
 
           <h2 className="sr-only" aria-hidden={isFlipped}>
             Flipp kort nummer {index + 1}
