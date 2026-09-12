@@ -10,6 +10,17 @@ export const Credits = ({ onClose }: { onClose: () => void }) => {
           Om
         </Heading>
         <Paragraph>Laget for KS Digital, Javazone 2026.</Paragraph>
+        <Paragraph data-size="sm">
+          Lyd:{" "}
+          <a
+            className="underline"
+            href="https://freesound.org/people/LittleRobotSoundFactory/sounds/270404/"
+          >
+            Jingle_Achievement_00
+          </a>{" "}
+          av LittleRobotSoundFactory (CC BY 4.0). Øvrige lyder fra freesound.org
+          (CC0).
+        </Paragraph>
       </div>
       <div className="text-center">
         <Button onClick={() => onClose()}>Lukk</Button>

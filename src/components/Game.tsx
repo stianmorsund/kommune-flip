@@ -7,6 +7,7 @@ import { NamePrompt } from "./NamePrompt";
 import { Result, TopList } from "./TopList";
 import Timer from "./Timer";
 import { readTop10, writeTop10 } from "../utils/storage";
+import { playSound } from "../utils/sound";
 
 type GameProps = {
   numberOfCards: number;
@@ -58,6 +59,7 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
     setMatchedIndices([...matchedIndices, firstIndex, secondIndex]);
     setannoncePairs(`Du fant et et par! ` + cards[firstIndex].navn);
     confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    playSound("match", 0.6);
     setFlippedIndices([]);
   };
 
@@ -69,6 +71,7 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
   const handleCardClick = (index: number) => {
     if (flippedIndices.length === 2 || flippedIndices.includes(index)) return;
 
+    playSound("cardFlip", 0.1);
     const newFlippedIndices = [...flippedIndices, index];
     setFlippedIndices(newFlippedIndices);
 
@@ -94,14 +97,17 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
   };
 
   useEffect(() => {
+    if (isGameFinished) return;
     if (
       matchedIndices.length > 0 &&
       cards.length > 0 &&
       matchedIndices.length === cards.length
     ) {
       setIsGameFinished(true);
+      const isNewRecord = top10.length === 0 || elapsedTime < top10[0].time;
+      playSound(isNewRecord ? "newRecord" : "gameDone", 0.2);
     }
-  }, [matchedIndices, cards]);
+  }, [matchedIndices, cards, isGameFinished, elapsedTime, top10]);
 
   useEffect(() => {
     if (isGameFinished) {
