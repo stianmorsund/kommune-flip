@@ -107,7 +107,7 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
 
   return (
     <>
-      <div className="fixed top-0 right-0 z-10">
+      <div className="fixed top-0 right-0 z-10 pointer-events-none">
         <Timer time={elapsedTime} />
       </div>
       <div aria-live="polite" aria-atomic={true} className="sr-only">
