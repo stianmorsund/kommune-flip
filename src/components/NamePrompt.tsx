@@ -23,8 +23,8 @@ export const NamePrompt = ({ onTypedName, time }: NamePromptProps) => {
           Bra jobbet! Du brukte {time} sekunder, noe som er blant de 10 beste!
         </Heading>
         <Paragraph>
-          Hva heter du? Fornavn eller nickname holder. For ordens skyld lagrer
-          vi ingen data.
+          Hva heter du? Fornavn eller nickname holder. Vi lagrer
+          ingen data.
         </Paragraph>
         <Field>
           <Label>Ditt navn</Label>
