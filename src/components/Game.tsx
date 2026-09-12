@@ -13,6 +13,8 @@ type GameProps = {
   cardFlipDuration: number;
 };
 
+const maxGameDurationSeconds = 1000;
+
 const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
   const pickedKommuner = randomKommuner(numberOfCards / 2);
   const [cards, setCards] = useState<Kommune[]>([
@@ -36,10 +38,14 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
 
   useEffect(() => {
     if (!isGameFinished) {
-      const interval = setInterval(
-        () => setElapsedTime((Date.now() - startTime) / 1000),
-        100
-      );
+      const interval = setInterval(() => {
+        const seconds = (Date.now() - startTime) / 1000;
+        if (seconds >= maxGameDurationSeconds) {
+          window.location.reload();
+          return;
+        }
+        setElapsedTime(seconds);
+      }, 100);
       return () => clearInterval(interval);
     }
   }, [startTime, elapsedTime, setElapsedTime, isGameFinished]);
