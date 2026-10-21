@@ -25,6 +25,37 @@
 }
 
 /*
+iOS Safari fixes.
+
+- `dvh` keeps the board above the Safari toolbar; `100vh` reports the height
+  without browser chrome, which pushed the bottom row of cards out of reach.
+- `touch-action: manipulation` removes double-tap-to-zoom, which otherwise
+  eats the second tap when two cards are flipped in quick succession.
+- Rubber-band scrolling and the long-press callout both steal touches from
+  the board.
+*/
+@layer base {
+  html {
+    height: 100dvh;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    height: 100dvh;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+}
+
+/*
 Classes not included in Tailwind 
 */
 
@@ -33,10 +64,12 @@ Classes not included in Tailwind
 }
 
 .backface-visible {
+  -webkit-backface-visibility: visible;
   backface-visibility: visible;
 }
 
 .backface-hidden {
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
