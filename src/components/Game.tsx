@@ -1,5 +1,5 @@
 import confetti from "canvas-confetti";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Kommune, randomKommuner } from "../assets/kommuner";
 import { shuffleArray } from "../utils/utils";
 import Card from "./Card";
@@ -15,6 +15,10 @@ type GameProps = {
 };
 
 const maxGameDurationSeconds = 1000;
+
+const isCardsEqual = (firstCard: Kommune, secondCard: Kommune) => {
+  return firstCard.image === secondCard.image;
+};
 
 const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
   const pickedKommuner = randomKommuner(numberOfCards / 2);
@@ -51,39 +55,43 @@ const Game = ({ numberOfCards, cardFlipDuration }: GameProps) => {
     }
   }, [startTime, elapsedTime, setElapsedTime, isGameFinished]);
 
-  const isCardsEqual = (firstCard: Kommune, secondCard: Kommune) => {
-    return firstCard.image === secondCard.image;
-  };
+  const handleMatch = useCallback(
+    (firstIndex: number, secondIndex: number) => {
+      setMatchedIndices((previous) => [...previous, firstIndex, secondIndex]);
+      setannoncePairs(`Du fant et et par! ` + cards[firstIndex].navn);
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      playSound("match", 0.6);
+      setFlippedIndices([]);
+    },
+    [cards]
+  );
 
-  const handleMatch = (firstIndex: number, secondIndex: number) => {
-    setMatchedIndices([...matchedIndices, firstIndex, secondIndex]);
-    setannoncePairs(`Du fant et et par! ` + cards[firstIndex].navn);
-    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-    playSound("match", 0.6);
-    setFlippedIndices([]);
-  };
-
-  const handleNonMatch = () => {
+  const handleNonMatch = useCallback(() => {
     setannoncePairs("Det var ikke et par.");
     setTimeout(() => setFlippedIndices([]), cardFlipDuration);
-  };
+  }, [cardFlipDuration]);
 
-  const handleCardClick = (index: number) => {
-    if (flippedIndices.length === 2 || flippedIndices.includes(index)) return;
+  // Kept referentially stable across timer ticks so the memoised cards only
+  // re-render when a flip actually changes something.
+  const handleCardClick = useCallback(
+    (index: number) => {
+      if (flippedIndices.length === 2 || flippedIndices.includes(index)) return;
 
-    playSound("cardFlip", 0.1);
-    const newFlippedIndices = [...flippedIndices, index];
-    setFlippedIndices(newFlippedIndices);
+      playSound("cardFlip", 0.1);
+      const newFlippedIndices = [...flippedIndices, index];
+      setFlippedIndices(newFlippedIndices);
 
-    if (newFlippedIndices.length === 2) {
-      const [firstIndex, secondIndex] = newFlippedIndices;
-      if (isCardsEqual(cards[firstIndex], cards[secondIndex])) {
-        handleMatch(firstIndex, secondIndex);
-      } else {
-        handleNonMatch();
+      if (newFlippedIndices.length === 2) {
+        const [firstIndex, secondIndex] = newFlippedIndices;
+        if (isCardsEqual(cards[firstIndex], cards[secondIndex])) {
+          handleMatch(firstIndex, secondIndex);
+        } else {
+          handleNonMatch();
+        }
       }
-    }
-  };
+    },
+    [flippedIndices, cards, handleMatch, handleNonMatch]
+  );
 
   const handleSubmitName = (name: string) => {
     setPlayername(name);

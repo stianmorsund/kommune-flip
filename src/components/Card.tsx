@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { createRef, useEffect, useState } from "react";
+import { memo, useCallback } from "react";
 import { Heading } from "@ks-digital/designsystem-react";
 import { Kommune } from "../assets/kommuner";
 
@@ -19,60 +19,18 @@ const Card = ({
   handleClick,
   cardFlipDuration,
 }: CardProps) => {
-  const cardRef = createRef<HTMLButtonElement>();
-  const glowRef = createRef<HTMLDivElement>();
-  const [bounds, setBounds] = useState<DOMRect>();
-
-  useEffect(() => {
-    const currentCard = cardRef.current!;
-    const currentGlowRef = glowRef.current!;
-    const rotateToMouse = (event: MouseEvent) => {
-      if (!bounds || isFlipped) return;
-
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-      const leftX = mouseX - bounds.x;
-      const topY = mouseY - bounds.y;
-      const center = {
-        x: leftX - bounds.width / 2,
-        y: topY - bounds.height / 2,
-      };
-      currentGlowRef.style.backgroundImage = `
-        radial-gradient(
-          circle at
-          ${center.x * 2 + bounds.width / 2}px
-          ${center.y * 2 + bounds.height / 2}px,
-          #ffffff55,
-          #0000000f
-        )
-      `;
-    };
-
-    currentCard.addEventListener("mouseenter", () => {
-      const cardBounds = currentCard.getBoundingClientRect();
-      setBounds(cardBounds);
-      currentCard.addEventListener("mousemove", rotateToMouse);
-    });
-    currentCard.addEventListener("mouseleave", () => {
-      currentCard.style.transform = "none";
-      currentCard.style.background = "none";
-      currentGlowRef.style.backgroundImage = "";
-      currentCard.removeEventListener("mousemove", rotateToMouse);
-    });
-  }, [bounds, cardRef, glowRef, isFlipped]);
-
-
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     handleClick(index);
-  };
+  }, [handleClick, index]);
 
   return (
     <button
+      type="button"
       aria-expanded={isFlipped}
       aria-atomic={false}
-      ref={cardRef}
+      style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
       className={classNames(
-        "relative cursor-pointer select-none duration-150 shadow-card hover:shadow-card-hover transition-transform-shadow rounded-xl overflow-hidden focus-visible:ring-8 focus-visible:ring-focus focus-visible:ring-offset-2 w-full h-full",
+        "group relative cursor-pointer select-none rounded-xl focus-visible:ring-8 focus-visible:ring-focus focus-visible:ring-offset-2 w-full h-full",
         {
           "pointer-events-none": isFlipped,
         }
@@ -80,9 +38,14 @@ const Card = ({
       onClick={handleCardClick}
     >
       <div
-        style={{ transformStyle: "preserve-3d" }}
+        style={{
+          transformStyle: "preserve-3d",
+          // Inline, because `duration-${cardFlipDuration}` is a dynamic class
+          // name that Tailwind never generates, leaving the flip unanimated.
+          transitionDuration: `${cardFlipDuration}ms`,
+        }}
         className={classNames(
-          `wrap-break-word absolute inset-0 transition-transform duration-${cardFlipDuration}`,
+          "wrap-break-word absolute inset-0 transition-transform",
           {
             "transform rotate-y-180": isFlipped,
           }
@@ -92,7 +55,7 @@ const Card = ({
         <div
           role="status"
           className={classNames(
-            "absolute w-full h-full flex justify-center content-center bg-white rounded-xl transform rotate-y-180 flex-col"
+            "absolute w-full h-full flex justify-center content-center bg-white rounded-xl transform rotate-y-180 flex-col backface-hidden shadow-card"
           )}
         >
           <img
@@ -111,16 +74,18 @@ const Card = ({
         </div>
 
         {/* Front of card */}
+        {/* The shadow sits on the faces, not the button, so it rotates away
+            with the card instead of leaving a full-size shadow hanging behind
+            the flip. */}
         <div
           className={classNames(
-            "absolute inset-0 bg-(--ds-color-accent-base-default) backface-hidden transform rotate-y-0 flex items-center justify-center overflow-hidden rounded-xl"
+            "absolute inset-0 bg-(--ds-color-accent-base-default) backface-hidden transform rotate-y-0 flex items-center justify-center overflow-hidden rounded-xl shadow-card group-hover:shadow-card-hover transition-shadow duration-150"
           )}
         >
           <div className="pointer-events-none absolute inset-1 sm:inset-1.5 rounded-lg overflow-hidden card-pattern"></div>
 
           <div
-            ref={glowRef}
-            className="absolute w-full h-full left-0 top-0 bg-custom-radial"
+            className="pointer-events-none absolute w-full h-full left-0 top-0 bg-custom-radial"
           ></div>
 
           <div className="pointer-events-none absolute inset-1 sm:inset-1.5 rounded-lg border-[6px] border-white/80"></div>
@@ -140,4 +105,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default memo(Card);

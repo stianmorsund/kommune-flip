@@ -9,7 +9,7 @@ const editions = {
   underwater: { background: "bg-[url('/bg2026.png')]", Splash: SplashScreen2026 },
 };
 
-const { background, Splash } = editions.underwater;
+const { background, Splash } = editions.classic;
 
 const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <main
-      className={`relative isolate h-screen mx-auto bg-no-repeat bg-cover ${background}`}
+      className={`relative isolate h-dvh mx-auto bg-no-repeat bg-cover ${background}`}
     >
       {!gameStarted ? (
         <Splash onStartGame={handleStartGame} />
