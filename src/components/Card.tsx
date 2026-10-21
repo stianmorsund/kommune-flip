@@ -30,7 +30,7 @@ const Card = ({
       aria-atomic={false}
       style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
       className={classNames(
-        "relative cursor-pointer select-none duration-150 shadow-card hover:shadow-card-hover transition-transform-shadow rounded-xl overflow-hidden focus-visible:ring-8 focus-visible:ring-focus focus-visible:ring-offset-2 w-full h-full",
+        "group relative cursor-pointer select-none rounded-xl focus-visible:ring-8 focus-visible:ring-focus focus-visible:ring-offset-2 w-full h-full",
         {
           "pointer-events-none": isFlipped,
         }
@@ -55,7 +55,7 @@ const Card = ({
         <div
           role="status"
           className={classNames(
-            "absolute w-full h-full flex justify-center content-center bg-white rounded-xl transform rotate-y-180 flex-col backface-hidden"
+            "absolute w-full h-full flex justify-center content-center bg-white rounded-xl transform rotate-y-180 flex-col backface-hidden shadow-card"
           )}
         >
           <img
@@ -74,9 +74,12 @@ const Card = ({
         </div>
 
         {/* Front of card */}
+        {/* The shadow sits on the faces, not the button, so it rotates away
+            with the card instead of leaving a full-size shadow hanging behind
+            the flip. */}
         <div
           className={classNames(
-            "absolute inset-0 bg-(--ds-color-accent-base-default) backface-hidden transform rotate-y-0 flex items-center justify-center overflow-hidden rounded-xl"
+            "absolute inset-0 bg-(--ds-color-accent-base-default) backface-hidden transform rotate-y-0 flex items-center justify-center overflow-hidden rounded-xl shadow-card group-hover:shadow-card-hover transition-shadow duration-150"
           )}
         >
           <div className="pointer-events-none absolute inset-1 sm:inset-1.5 rounded-lg overflow-hidden card-pattern"></div>
